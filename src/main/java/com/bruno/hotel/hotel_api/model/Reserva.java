@@ -27,7 +27,7 @@ public class Reserva {
     private LocalDateTime dataCheckout;
 
     @Enumerated(EnumType.STRING)
-    private StatusReseva status;
+    private StatusReserva status;
 
     private BigDecimal valorTotal;
     private Boolean usaVaga;

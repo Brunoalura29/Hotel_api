@@ -4,7 +4,7 @@ package com.bruno.hotel.hotel_api.service;
 import com.bruno.hotel.hotel_api.dto.CheckoutResponseDTO;
 import com.bruno.hotel.hotel_api.exception.BusinessRuleException;
 import com.bruno.hotel.hotel_api.model.Reserva;
-import com.bruno.hotel.hotel_api.model.StatusReseva;
+import com.bruno.hotel.hotel_api.model.StatusReserva;
 import com.bruno.hotel.hotel_api.repository.ReservaRepository;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +25,7 @@ public class CheckoutService {
 
     public CheckoutResponseDTO checkout(Long reservaId, LocalDateTime quando) {
         Reserva r = reservaRepository.findById(reservaId).orElseThrow(() -> new BusinessRuleException("Reserva não encontrada"));
-        if (r.getStatus() != null && r.getStatus().equals(StatusReseva.CHECKED_OUT)) {
+        if (r.getStatus() != null && r.getStatus().equals(StatusReserva.CHECKED_OUT)) {
             throw new BusinessRuleException("Reserva já finalizada.");
         }
 
@@ -60,7 +60,7 @@ public class CheckoutService {
 
         r.setDataCheckout(quando);
         r.setValorTotal(total);
-        r.setStatus(StatusReseva.CHECKED_OUT);
+        r.setStatus(StatusReserva.CHECKED_OUT);
 
         // Persiste alterações
         reservaRepository.save(r);

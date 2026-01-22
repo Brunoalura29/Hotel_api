@@ -2,7 +2,7 @@ package com.bruno.hotel.hotel_api.service;
 
 import com.bruno.hotel.hotel_api.exception.BusinessRuleException;
 import com.bruno.hotel.hotel_api.model.Reserva;
-import com.bruno.hotel.hotel_api.model.StatusReseva;
+import com.bruno.hotel.hotel_api.model.StatusReserva;
 import com.bruno.hotel.hotel_api.repository.ReservaRepository;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +30,7 @@ public class CheckinService {
         r.setDataCheckin(quando);
 
         // Atualiza o status da reserva para CHECKED_IN
-        r.setStatus(StatusReseva.CHECKED_IN);
+        r.setStatus(StatusReserva.CHECKED_IN);
 
         // Persiste as alterações no banco e retorna a reserva atualizada
         return reservaRepository.save(r);
