@@ -34,4 +34,5 @@ public class CheckinService {
 
         // Persiste as alterações no banco e retorna a reserva atualizada
         return reservaRepository.save(r);
+    }
 }

@@ -34,3 +34,4 @@ public class HospedeService {
         return hospedeRepository.findByTelefone(telefone);
     }
 }
+
