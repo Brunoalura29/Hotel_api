@@ -1,0 +1,121 @@
+{
+  "info": {
+    "name": "Hotel API",
+    "description": "Coleção Postman para testes da Hotel API (Hóspedes, Reservas, Check-in e Checkout)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Hóspedes",
+      "item": [
+        {
+          "name": "Criar hóspede",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Maria Silva\",\n  \"documento\": \"12345678900\",\n  \"telefone\": \"48999999999\",\n  \"temCarro\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/hospedes",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "hospedes"]
+            }
+          }
+        },
+        {
+          "name": "Buscar hóspede (nome / telefone / documento)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/hospedes/search?nome={{nome}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "hospedes", "search"],
+              "query": [
+                { "key": "nome", "value": "{{nome}}" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reservas",
+      "item": [
+        {
+          "name": "Criar reserva",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"hospedeId\": {{hospedeId}},\n  \"dataEntradaPrevista\": \"2026-01-26T14:00:00\",\n  \"dataSaidaPrevista\": \"2026-01-28T12:00:00\",\n  \"usaVaga\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/reservas",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reservas"]
+            }
+          }
+        },
+        {
+          "name": "Listar reservas por status",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/reservas/status/{{statusReserva}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reservas", "status", "{{statusReserva}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Operações",
+      "item": [
+        {
+          "name": "Check-in",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "{{baseUrl}}/api/ops/checkin/{{idReserva}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "ops", "checkin", "{{idReserva}}"]
+            }
+          }
+        },
+        {
+          "name": "Checkout",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "\"2026-01-28T12:00:00\""
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/ops/checkout/{{idReserva}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "ops", "checkout", "{{idReserva}}"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "nome", "value": "Maria" },
+    { "key": "hospedeId", "value": "1" },
+    { "key": "idReserva", "value": "1" },
+    { "key": "statusReserva", "value": "RESERVADO" }
+  ]
+}

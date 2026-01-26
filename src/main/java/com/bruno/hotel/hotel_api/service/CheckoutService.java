@@ -67,6 +67,7 @@ public class CheckoutService {
 
         // Retorna resposta com detalhamento dos valores
         return CheckoutResponseDTO.builder()
+                .mensagem("Checkout realizado com sucesso")
                 .valorDiarias(valorDiarias)
                 .valorEstacionamento(valorEstacionamento)
                 .valorAtraso(valorAtraso)

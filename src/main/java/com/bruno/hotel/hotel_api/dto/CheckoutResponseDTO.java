@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 @Data
 @Builder
 public class CheckoutResponseDTO {
+    private String mensagem;
     private BigDecimal valorDiarias;
     private BigDecimal valorEstacionamento;
     private BigDecimal valorAtraso;

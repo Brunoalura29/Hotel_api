@@ -18,6 +18,7 @@ public class Reserva {
     private Long id;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name = "hospede_id", nullable = false)
     private Hospede hospede;
 
     private LocalDateTime dataEntradaPrevista;

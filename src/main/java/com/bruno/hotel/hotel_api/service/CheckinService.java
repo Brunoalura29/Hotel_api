@@ -6,6 +6,7 @@ import com.bruno.hotel.hotel_api.model.StatusReserva;
 import com.bruno.hotel.hotel_api.repository.ReservaRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
@@ -20,7 +21,15 @@ public class CheckinService {
     public Reserva checkin(Long reservaId, LocalDateTime quando) {
         Reserva r = reservaRepository.findById(reservaId).orElseThrow(() -> new BusinessRuleException("Reserva não encontrada"));
 
-        // regra: check-in a partir das 14:00
+        // regra 1: check-in não pode ser realizado antes da data previta
+        LocalDate dataEntrada = r.getDataEntradaPrevista().toLocalDate();
+        LocalDate dataCheckin = quando.toLocalDate();
+
+        if (dataCheckin.isBefore(dataEntrada)) {
+            throw new BusinessRuleException("Check-in não permitido antes da data de entrada");
+        }
+
+        // regra 2: check-in a partir das 14:00
         LocalDateTime inicioCheckin = quando.withHour(14).withMinute(0).withSecond(0).withNano(0);
         if (quando.isBefore(inicioCheckin)) {
             throw new BusinessRuleException("Check-in só permitido a partir das 14:00. (Tentativa em: " + quando.toLocalTime() + ")");
