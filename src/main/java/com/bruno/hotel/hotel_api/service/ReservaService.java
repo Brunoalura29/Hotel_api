@@ -9,7 +9,7 @@ import com.bruno.hotel.hotel_api.repository.HospedeRepository;
 import com.bruno.hotel.hotel_api.repository.ReservaRepository;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 
 import java.util.List;
 
@@ -30,8 +30,22 @@ public class ReservaService {
         Hospede hospede = hospedeRepository.findById(dto.getHospedeId())
                 .orElseThrow(() -> new RuntimeException("Hóspede não encontrado"));
 
+        LocalDate hoje = LocalDate.now();
+        LocalDate dataEntrada = dto.getDataEntradaPrevista().toLocalDate();
+        LocalDate dataSaida = dto.getDataSaidaPrevista().toLocalDate();
+
+        // regra 1: não permitir reserva no passado
+        if (dataEntrada.isBefore(hoje)) {
+            throw new RuntimeException("Data de entrada não pode ser no passado");
+        }
+
+        // regra 2: saída deve ser após entrada
+        if (!dataSaida.isAfter(dataEntrada)) {
+            throw new RuntimeException("Data de saída deve ser posterior à data de entrada");
+        }
+
         Reserva reserva = Reserva.builder()
-                .hospede(hospede) // ⭐ ESSENCIAL
+                .hospede(hospede)
                 .dataEntradaPrevista(dto.getDataEntradaPrevista())
                 .dataSaidaPrevista(dto.getDataSaidaPrevista())
                 .usaVaga(dto.getUsaVaga())
@@ -49,10 +63,3 @@ public class ReservaService {
 
 }
 
-/*
-    public Reserva save(Reserva r) {
-        if (r.getStatus() == null) r.setStatus(StatusReserva.RESERVADO);
-        return reservaRepository.save(r);
-    }
-
-} */

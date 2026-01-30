@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class ReservaRequestDTO {
+    private String mensagem;
     private Long hospedeId;
     private LocalDateTime dataEntradaPrevista;
     private LocalDateTime dataSaidaPrevista;
