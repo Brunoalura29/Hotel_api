@@ -35,6 +35,11 @@ public class CheckinService {
             throw new BusinessRuleException("Check-in só permitido a partir das 14:00. (Tentativa em: " + quando.toLocalTime() + ")");
         }
 
+        // regra 3: não permitir checkin duplicado
+        if (r.getStatus() == StatusReserva.CHECKED_IN) {
+            throw new BusinessRuleException("Reserva já está com check-in realizado");
+        }
+
         // Atualiza a data/hora real do check-in
         r.setDataCheckin(quando);
 

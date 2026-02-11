@@ -64,6 +64,39 @@
           }
         },
         {
+          "name": "Listar reservas RESERVADAS",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/reservas/status/RESERVADO",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reservas", "status", "RESERVADO"]
+            }
+          }
+        },
+        {
+          "name": "Listar CHECK-INs realizados",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/reservas/status/CHECKED_IN",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reservas", "status", "CHECKED_IN"]
+            }
+          }
+        },
+        {
+          "name": "Listar CHECK-OUTs realizados",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/reservas/status/CHECKED_OUT",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "reservas", "status", "CHECKED_OUT"]
+            }
+          }
+        },
+        {
           "name": "Listar reservas por status",
           "request": {
             "method": "GET",
