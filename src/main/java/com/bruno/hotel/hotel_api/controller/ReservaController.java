@@ -25,18 +25,8 @@ public class ReservaController {
     }
     @GetMapping("/status/{status}")
     public ResponseEntity<List<Reserva>> porStatus(@PathVariable String status) {
-        return ResponseEntity.ok(reservaService.findByStatus(Enum.valueOf(com.bruno.hotel.hotel_api.model.StatusReserva.class, status))); }
-
-
-   // @GetMapping("/status/{status}")
-    //public ResponseEntity<List<Reserva>> porStatus(@PathVariable StatusReserva status) {
-        //return ResponseEntity.ok(reservaService.findByStatus(status));
-   // }
-
-    /*@PostMapping
-    public ResponseEntity<Reserva> criar(@RequestBody Reserva reserva) {
-        return ResponseEntity.ok(reservaService.save(reserva));
-    }*/
-
+        return ResponseEntity.ok(
+                reservaService.findByStatus(
+                        Enum.valueOf(com.bruno.hotel.hotel_api.model.StatusReserva.class, status))); }
 
 }

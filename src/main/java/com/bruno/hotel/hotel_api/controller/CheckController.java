@@ -22,12 +22,6 @@ public class CheckController {
         this.checkoutService = checkoutService;
     }
 
-    @PostMapping("/checkin/{reservaId}")
-    public ResponseEntity<Reserva> checkin(@PathVariable Long reservaId, @RequestBody(required = false) LocalDateTime when) {
-        LocalDateTime now = when != null ? when : LocalDateTime.now();
-        return ResponseEntity.ok(checkinService.checkin(reservaId, now));
-    }
-
     @PutMapping("/checkout/{reservaId}")
     public ResponseEntity<CheckoutResponseDTO> checkout(@PathVariable Long reservaId, @RequestBody(required = false) LocalDateTime when) {
         LocalDateTime now = when != null ? when : LocalDateTime.now();
@@ -35,9 +29,7 @@ public class CheckController {
     }
 
     @PutMapping("/checkin/{reservaId}")
-    public ResponseEntity<Reserva> realizarCheckin(
-            @PathVariable Long reservaId
-    ) {
+    public ResponseEntity<Reserva> realizarCheckin(@PathVariable Long reservaId) {
         Reserva reserva = checkinService.checkin(reservaId, LocalDateTime.now());
         return ResponseEntity.ok(reserva);
     }
