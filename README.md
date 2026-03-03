@@ -30,10 +30,16 @@ Este projeto foi desenvolvido utilizando **Spring Boot**, aplicando boas prátic
 
 ## 1. Clonar o repositório
 
-git clone https: https://github.com/Brunoalura29/Hotel_api
-
-cd seu-backend 
-
+```
+git clone https://github.com/Brunoalura29/Hotel_api.git
+```
+Acessar pasta do projeto:
+``` 
+cd Hotel_api
+```
+Você pode abrir no:
+- IntelliJ IDEA
+- VS Code
 ---
 
 ## 2. Configurar o Banco de Dados
@@ -199,4 +205,6 @@ Este backend foi desenvolvido para integração com aplicação Angular disponí
 Bruno Henrique Dias
 
 GitHub: https://github.com/Brunoalura29
+
+Linkedin: https://www.linkedin.com/in/bruno-henrique-dias-1a67631a3/
 
