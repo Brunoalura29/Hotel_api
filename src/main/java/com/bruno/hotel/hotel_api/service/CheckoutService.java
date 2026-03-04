@@ -49,11 +49,18 @@ public class CheckoutService {
 
         // verifica atraso de checkout (após 12:00) — cobrar 50% do valor da diária referente ao dia do checkout
         BigDecimal valorAtraso = BigDecimal.ZERO;
-        LocalDateTime limiteCheckout = quando.withHour(12).withMinute(0).withSecond(0).withNano(0);
-        if (quando.isAfter(limiteCheckout)) {
+        LocalDateTime dataPrevista = r.getDataSaidaPrevista();
+        if (dataPrevista != null) {
+            LocalDateTime limitePrevisto = dataPrevista
+                    .withHour(12)
+                    .withMinute(0)
+                    .withSecond(0)
+                    .withNano(0);
             // considerar taxa de 50% da diária do dia da saída
-            BigDecimal diariaDoDia = pricingService.dailyRate(quando.toLocalDate());
-            valorAtraso = diariaDoDia.multiply(BigDecimal.valueOf(0.5));
+            if (quando.isAfter(limitePrevisto)) {
+                BigDecimal diariaDoDia = pricingService.dailyRate(quando.toLocalDate());
+                valorAtraso = diariaDoDia.multiply(BigDecimal.valueOf(0.5));
+            }
         }
 
         BigDecimal total = valorDiarias.add(valorEstacionamento).add(valorAtraso);
