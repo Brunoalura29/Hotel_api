@@ -61,5 +61,9 @@ public class ReservaService {
         return reservaRepository.findByHospedeId(hospedeId);
     }
 
+    public Reserva buscarPorId(Long id) {
+        return reservaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reserva não encontrada"));
+    }
 }
 

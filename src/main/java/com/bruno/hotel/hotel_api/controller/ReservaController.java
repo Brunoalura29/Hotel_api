@@ -23,6 +23,12 @@ public class ReservaController {
     public ResponseEntity<Reserva> criar(@RequestBody ReservaRequestDTO dto) {
         return ResponseEntity.ok(reservaService.criar(dto));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Reserva> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(reservaService.buscarPorId(id));
+    }
+
     @GetMapping("/status/{status}")
     public ResponseEntity<List<Reserva>> porStatus(@PathVariable String status) {
         return ResponseEntity.ok(

@@ -1,5 +1,6 @@
 package com.bruno.hotel.hotel_api;
 
+import com.bruno.hotel.hotel_api.dto.CheckoutResponseDTO;
 import com.bruno.hotel.hotel_api.exception.BusinessRuleException;
 import com.bruno.hotel.hotel_api.model.Hospede;
 import com.bruno.hotel.hotel_api.model.Reserva;
@@ -14,14 +15,19 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class CheckoutServiceTest {
+class   CheckoutServiceTest {
 
     @Mock
     private ReservaRepository reservaRepository;
@@ -78,5 +84,44 @@ class CheckoutServiceTest {
 
         assertThrows(BusinessRuleException.class,
                 () -> checkoutService.checkout(1L, LocalDateTime.now()));
+    }
+
+    @Test
+    void deveCobrarMultaQuandoCheckoutForAposMeioDia() {
+
+        // Cenário
+        Long reservaId = 1L;
+
+        LocalDateTime checkin = LocalDateTime.of(2026, 3, 1, 14, 0);
+        LocalDateTime checkoutAtrasado = LocalDateTime.of(2026, 3, 2, 13, 0);
+
+        Hospede hospede = new Hospede();
+        hospede.setTemCarro(false);
+
+        Reserva reserva = new Reserva();
+        reserva.setId(reservaId);
+        reserva.setDataCheckin(checkin);
+        reserva.setStatus(StatusReserva.CHECKED_IN);
+        reserva.setUsaVaga(false);
+        reserva.setHospede(hospede);
+
+        when(reservaRepository.findById(reservaId)).thenReturn(Optional.of(reserva));
+
+        // 1 noite
+        when(pricingService.nightsBetween(checkin, checkoutAtrasado)).thenReturn(1L);
+
+        // diária do dia
+        when(pricingService.dailyRate(any(LocalDate.class)))
+                .thenReturn(BigDecimal.valueOf(120.00));
+
+        CheckoutResponseDTO response = checkoutService.checkout(reservaId, checkoutAtrasado);
+
+        // Verificações
+        BigDecimal valorEsperadoMulta = BigDecimal.valueOf(60.00);
+
+        assertEquals(0, valorEsperadoMulta.compareTo(response.getValorAtraso()));
+        assertEquals(StatusReserva.CHECKED_OUT, reserva.getStatus());
+
+        verify(reservaRepository).save(reserva);
     }
 }

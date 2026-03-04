@@ -1,6 +1,7 @@
 package com.bruno.hotel.hotel_api.controller;
 
 import com.bruno.hotel.hotel_api.model.Hospede;
+import com.bruno.hotel.hotel_api.model.Reserva;
 import com.bruno.hotel.hotel_api.repository.HospedeRepository;
 import com.bruno.hotel.hotel_api.service.HospedeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class HospedeController {
 
     @GetMapping
     public ResponseEntity<List<Hospede>> listar() {
-        return ResponseEntity.ok(hospedeService.findAll());
+        return ResponseEntity.ok(hospedeService.listar());
     }
 
     @PostMapping

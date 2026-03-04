@@ -3,6 +3,7 @@ package com.bruno.hotel.hotel_api.service;
 
 import com.bruno.hotel.hotel_api.model.Hospede;
 import com.bruno.hotel.hotel_api.repository.HospedeRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -24,16 +25,15 @@ public class HospedeService {
 
     public Optional<Hospede> findByDocumento(String documento) {
         return hospedeRepository.findByDocumento(documento);
-
     }
 
     public List<Hospede> findByTelefone(String telefone) {
         return hospedeRepository.findByTelefone(telefone);
     }
 
-    public List<Hospede> findAll() {
-        return hospedeRepository.findAll();
-    }
+    public List<Hospede> listar() {
+        return hospedeRepository.findAll(Sort.by(Sort.Direction.ASC, "nome"));
+     }
 
     public Hospede save(Hospede hospede) {
         return hospedeRepository.save(hospede);

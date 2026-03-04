@@ -18,6 +18,14 @@ public class GlobalExceptionHandler {
         ));
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<?> handleIllegalArgument(IllegalArgumentException ex) {
+        return ResponseEntity.badRequest().body(Map.of(
+                "timestamp", LocalDateTime.now(),
+                "message", "Valor inválido informado"
+        ));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleOther(Exception ex) {
         ex.printStackTrace();
